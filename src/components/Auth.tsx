@@ -5,7 +5,7 @@ import {supabase} from "@/types/supabaseClient";
 
 export default function AuthCallback() {
     const router = useRouter();
-    const [loading, setLoading] = useState(true);
+    const [, setLoading] = useState(true);
 
     useEffect(() => {
         const handleOAuthCallback = async () => {

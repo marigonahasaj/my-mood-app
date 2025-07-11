@@ -119,7 +119,7 @@ export default function AlmostThereForm({
                 {isTalkItOut && selectedSub && (
                     <div className="mt-4 text-left">
                         <label className="block text-sm font-medium text-zinc-700 mb-1">
-                            Describe how you're feeling (max 300 characters):
+                            Describe how you&apos;re feeling (max 300 characters):
                         </label>
                         <textarea
                             maxLength={300}

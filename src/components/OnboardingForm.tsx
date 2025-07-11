@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import {
     RocketLaunchIcon,
-    SparklesIcon,
     MusicalNoteIcon,
     TrophyIcon,
 } from "@heroicons/react/24/outline";
@@ -215,11 +214,11 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
     const [selected, setSelected] = useState<MoodProfile | null>(null);
     const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-    const sortedProfiles = [
+    const sortedProfiles = useMemo(() => [
         ...moodProfiles.filter((m) => m.tone === "negative"),
         ...moodProfiles.filter((m) => m.tone === "neutral"),
         ...moodProfiles.filter((m) => m.tone === "positive"),
-    ];
+    ], []);
 
     useEffect(() => {
         if (step === 1) {
@@ -232,7 +231,8 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
                 }, 400);
             }
         }
-    }, [step]);
+    }, [step, sortedProfiles]);
+
 
     if (step === 0) {
         return (
@@ -257,9 +257,11 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
                                 <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white to-transparent pointer-events-none z-10" />
                                 <div className="absolute top-0 animate-roll space-y-[10px] z-0">
                                     {[...Array(3)].map((_, i) => (
+                                        // eslint-disable-next-line @next/next/no-img-element
                                         <img key={i} src="/images/emotions.gif" alt={`Emotions ${i}`} className="w-full object-cover" />
                                     ))}
                                 </div>
+
                                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
                             </div>
 
