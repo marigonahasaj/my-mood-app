@@ -61,8 +61,8 @@ export default function ResultPage({
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-lime-50 via-amber-50 to-rose-50 px-4 py-12">
-            <div className="w-full max-w-md bg-white px-6 py-8 rounded-2xl shadow-xl space-y-6 text-center">
+        <div className="h-[600px] flex items-center justify-center bg-gradient-to-b from-lime-50 via-amber-50 to-rose-50 px-6 py-4">
+            <div className="w-full max-h-[500px] overflow-y-auto max-w-md bg-white px-6 py-8 rounded-2xl shadow-xl space-y-6 text-center text-olive-800">
                 <h2 className="text-2xl font-bold text-zinc-800">
                     {moodIntent === "Talk It Out" ? "Let’s Chat 💬" : "Your Vibe-Based Insight"}
                 </h2>

@@ -62,7 +62,7 @@ export default function MoodResult({
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-lime-50 via-amber-50 to-rose-50 flex items-center justify-center px-4 py-12">
+        <div className="h-[600px] bg-gradient-to-b from-lime-50 via-amber-50 to-rose-50 flex items-center justify-center px-6 py-4">
             <div className="w-full max-w-md bg-white px-6 py-8 rounded-2xl shadow-xl space-y-6 text-center">
 
                 {loading ? (

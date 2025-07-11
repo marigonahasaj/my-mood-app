@@ -5,6 +5,7 @@ import {
     MusicalNoteIcon,
     TrophyIcon,
 } from "@heroicons/react/24/outline";
+import {signInWithGoogle} from "@/utils/auth";
 
 type MoodTone = "negative" | "neutral" | "positive";
 
@@ -235,8 +236,8 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
 
     if (step === 0) {
         return (
-            <div className="relative min-h-screen bg-white overflow-hidden flex flex-col justify-between">
-                <div className="relative z-10 flex-1 flex flex-col justify-between px-4 py-10 sm:py-16 lg:py-24">
+            <div className="relative bg-white overflow-hidden flex flex-col justify-between lg:border lg:border-olive-100 lg:rounded-2xl lg:shadow-sm">
+                <div className="relative z-10 flex-1 flex flex-col justify-between px-4 py-4 sm:py-6 lg:py-12">
 
                     {/* Top content */}
                     <div className="max-w-xl w-full mx-auto text-center space-y-8">
@@ -336,9 +337,10 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
                         </button>
 
                         <div className="text-sm text-zinc-600">
+
                             <button
                                 className="inline-flex items-center justify-center text-amber-500 hover:text-amber-700 font-medium underline"
-                                onClick={() => alert("Redirect to login/signup modal or page here")}
+                                onClick={signInWithGoogle}
                             >
                                 Skip the small talk →
                             </button>
@@ -351,9 +353,9 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-between py-4 relative overflow-hidden">
+        <div className="h-[600px]  bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col items-center justify-between px-6 py-4 relative overflow-hidden lg:border lg:border-olive-100 lg:rounded-2xl lg:shadow-sm">
             <div className="relative z-10 w-full max-w-md">
-                <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full px-4">
+                <h2 className="text-xl font-semibold -tracking-wider text-zinc-800 w-full">
                     Current vibe:
                 </h2>
 
@@ -362,7 +364,7 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
                     <div className="pointer-events-none absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-white to-transparent z-10" />
 
                     {/* Scrollable mood list */}
-                    <div className="max-h-[70vh] overflow-y-auto bg-white px-4 py-4 space-y-4">
+                    <div className="max-h-[420px] overflow-y-auto bg-white px-4 py-4 space-y-4">
                         <fieldset className="space-y-4" aria-label="Mood Profile">
                             {sortedProfiles.map((profile) => {
                                 const isSelected = selected?.label === profile.label;

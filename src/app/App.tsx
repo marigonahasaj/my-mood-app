@@ -8,6 +8,7 @@ import MoodResult from "@/components/MoodResult";
 import MoodResultLoading from "@/components/MoodResultIsLoading";
 import ResultPage from "@/components/ResultPage";
 import { FormData } from "@/types/formdata";
+import {supabase} from "@/types/supabaseClient";
 
 export default function App() {
     const [step, setStep] = useState(0);
@@ -73,6 +74,66 @@ export default function App() {
         setOpenAiResponse(null);
         setStep(0);
     };
+
+    useEffect(() => {
+        const finalizeOAuthLogin = async () => {
+            if (window.location.hash.includes("access_token")) {
+                const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.hash);
+
+
+                if (error) {
+                    console.error("OAuth error:", error.message);
+                    return;
+                }
+
+                const user = data.session?.user;
+                console.log("✅ Logged in user:", user);
+
+                setFormData((prev) => ({
+                    ...prev,
+                    userDetails: {
+                        ...prev.userDetails,
+                        email: user?.email || "",
+                        name: user?.user_metadata?.full_name || "",
+                        isAuthenticated: true,
+                        skipped: false,
+                    },
+                }));
+
+                // Auto-skip to step 3
+                setStep(3);
+
+                // Clean up the URL so the hash disappears
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        };
+
+        finalizeOAuthLogin();
+    }, []);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+
+            if (session?.user) {
+                const user = session.user;
+                setFormData((prev) => ({
+                    ...prev,
+                    userDetails: {
+                        ...prev.userDetails,
+                        email: user.email || "",
+                        name: user.user_metadata?.full_name || "",
+                        isAuthenticated: true,
+                        skipped: false,
+                    },
+                }));
+                setStep(3); // optionally jump to step 3 on reload too
+            }
+        };
+
+        checkSession();
+    }, []);
+
 
     return (
         <main className="min-h-screen flex justify-center items-center bg-white">

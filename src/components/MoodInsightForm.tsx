@@ -74,7 +74,7 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col justify-between px-4 py-10 relative overflow-hidden">
+        <div className="h-[600px] bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col justify-between px-6 py-4 relative overflow-hidden">
             {/* Glowy blobs */}
             <div className="absolute top-[-100px] left-[-100px] w-[250px] h-[250px] bg-gradient-to-br from-rose-300 via-amber-200 to-lime-100 rounded-full blur-3xl opacity-40 z-0" />
             <div className="absolute bottom-[-100px] right-[-100px] w-[220px] h-[220px] bg-gradient-to-tr from-amber-200 via-lime-200 to-rose-100 rounded-full blur-2xl opacity-30 z-0" />
@@ -82,9 +82,9 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
             {/* Form Container */}
             <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col justify-between flex-1">
                 <div className="space-y-6 mb-6">
-                    <h2 className="text-xl font-bold text-zinc-800 text-center">Let’s understand this mood better</h2>
+                    <h2 className="text-xl font-semibold -tracking-wider w-full">Let’s understand this mood better</h2>
 
-                    <div className="space-y-5 overflow-y-auto">
+                    <div className="space-y-2 overflow-y-auto">
                         {questions.map((q, i) => (
                             <div key={i} className="space-y-1">
                                 <label className="text-sm text-zinc-700">{q}</label>
