@@ -80,7 +80,6 @@ export default function App() {
             if (window.location.hash.includes("access_token")) {
                 const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.hash);
 
-
                 if (error) {
                     console.error("OAuth error:", error.message);
                     return;
@@ -89,21 +88,28 @@ export default function App() {
                 const user = data.session?.user;
                 console.log("✅ Logged in user:", user);
 
+                const email = user?.email || "";
+
+                // 🔍 Check if this user has paid
+                const res = await fetch(`http://localhost:8000/has-paid?email=${email}`);
+                const { paid } = await res.json();
+
                 setFormData((prev) => ({
                     ...prev,
                     userDetails: {
                         ...prev.userDetails,
-                        email: user?.email || "",
+                        email,
                         name: user?.user_metadata?.full_name || "",
                         isAuthenticated: true,
                         skipped: false,
+                        hasPaid: paid,
                     },
                 }));
 
-                // Auto-skip to step 3
-                setStep(3);
+                // If paid, skip payment step
+                setStep(paid ? 4 : 3);
 
-                // Clean up the URL so the hash disappears
+                // Clean up the URL
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
         };
@@ -117,17 +123,24 @@ export default function App() {
 
             if (session?.user) {
                 const user = session.user;
+                const email = user.email || "";
+
+                const res = await fetch(`http://localhost:8000/has-paid?email=${email}`);
+                const { paid } = await res.json();
+
                 setFormData((prev) => ({
                     ...prev,
                     userDetails: {
                         ...prev.userDetails,
-                        email: user.email || "",
+                        email,
                         name: user.user_metadata?.full_name || "",
                         isAuthenticated: true,
                         skipped: false,
+                        hasPaid: paid,
                     },
                 }));
-                setStep(3); // optionally jump to step 3 on reload too
+
+                setStep(paid ? 4 : 3);
             }
         };
 
@@ -136,8 +149,8 @@ export default function App() {
 
 
     return (
-        <main className="min-h-screen flex justify-center items-center bg-white">
-            <div className="w-full max-w-md space-y-4 p-4">
+        <main className="min-h-screen w-full flex justify-center items-center bg-white overflow-hidden">
+        <div className="w-full max-w-md space-y-4 p-4">
                 {step === 0 && (
                     <OnboardingForm
                         onSelect={(profile) => {

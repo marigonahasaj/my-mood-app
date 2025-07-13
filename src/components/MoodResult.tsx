@@ -25,6 +25,7 @@ export default function MoodResult({
             const res = await fetch("http://localhost:8000/create-checkout-session", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: formData.userDetails.email }), // <- make sure this is set
             });
 
             const data = await res.json();
@@ -40,14 +41,16 @@ export default function MoodResult({
         }
     };
 
+
     const handleGenerateAndContinue = async () => {
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:8000/generate-response", {
+            const res = await fetch("http://localhost:8000/create-checkout-session", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ email: formData.userDetails.email }),
             });
+
 
             const data = await res.json();
             if (data.status === "success") {
