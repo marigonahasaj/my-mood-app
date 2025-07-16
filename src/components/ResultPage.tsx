@@ -27,27 +27,14 @@ export default function ResultPage({
         console.log("User replied:", userMessage);
         onReset();
     };
-    console.log(formData.finalDetails)
 
     const handleAnotherAnswer = async () => {
-        console.log("🔄 Fetching another answer for mood:", moodIntent);
         const savedData = localStorage.getItem("formData");
-        // const isPaid = savedData ? JSON.parse(savedData)?.userDetails?.hasPaid : false;
-        //
-        // if (!isPaid) {
-        //     toast("☕ This feature runs on caffeine only!", { duration: 3000 });
-        //     return;
-        // }
-
-        // TEMP: override payment check for testing purposes
-        const isPaid = true; // <== manually force access
-
-// Optionally, log if user is not marked as paid in localStorage
         const actuallyPaid = savedData ? JSON.parse(savedData)?.userDetails?.hasPaid : false;
+
         if (!actuallyPaid) {
             console.warn("User not marked as paid — allowing access for testing.");
         }
-//
 
         setLoading(true);
         try {
@@ -71,7 +58,6 @@ export default function ResultPage({
             setLoading(false);
         }
     };
-
 
     const renderResponse = () => {
         const rawIntent = formData?.finalDetails?.[0] || "";
@@ -116,7 +102,6 @@ export default function ResultPage({
             className: "text-zinc-700",
         };
 
-
         if (moodIntent === "Talk It Out") {
             return (
                 <>
@@ -152,9 +137,8 @@ export default function ResultPage({
                 </div>
                 <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
-                    children={response}
                     components={{
-                        a: ({ node, ...props }) => (
+                        a: (props) => (
                             <a
                                 {...props}
                                 target="_blank"
@@ -162,15 +146,16 @@ export default function ResultPage({
                                 className="text-blue-600 underline break-words"
                             />
                         ),
-                        p: ({ node, ...props }) => (
+                        p: (props) => (
                             <p {...props} className={`mb-2 ${theme.className}`} />
                         ),
-                        li: ({ node, ...props }) => (
+                        li: (props) => (
                             <li {...props} className={`ml-4 list-disc ${theme.className}`} />
-                        )
+                        ),
                     }}
-                />
-
+                >
+                    {response}
+                </ReactMarkdown>
             </div>
         );
     };
@@ -218,7 +203,6 @@ export default function ResultPage({
                         )}
                     </>
                 )}
-
             </div>
         </div>
     );
