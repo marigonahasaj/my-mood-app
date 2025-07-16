@@ -17,7 +17,7 @@ export default {
       },
 
       fontFamily: {
-        sans: ['"Josefin Sans"', 'sans-serif'],
+        sans: ['"Montserrat Alternates"', 'sans-serif'],
       },
       colors: {
         olive: {
