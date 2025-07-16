@@ -30,22 +30,22 @@ export default function ResultPage({
     const handleAnotherAnswer = async () => {
         console.log("🔄 Fetching another answer for mood:", moodIntent);
         const savedData = localStorage.getItem("formData");
-        // const isPaid = savedData ? JSON.parse(savedData)?.userDetails?.hasPaid : false;
-        //
-        // if (!isPaid) {
-        //     toast.loading("☕ Coders become generous after coffee!");
-        //     return;
-        // }
+        const isPaid = savedData ? JSON.parse(savedData)?.userDetails?.hasPaid : false;
 
-        // TEMP: override payment check for testing purposes
-        const isPaid = true; // <== manually force access
-
-// Optionally, log if user is not marked as paid in localStorage
-        const actuallyPaid = savedData ? JSON.parse(savedData)?.userDetails?.hasPaid : false;
-        if (!actuallyPaid) {
-            console.warn("User not marked as paid — allowing access for testing.");
+        if (!isPaid) {
+            toast("☕ This feature runs on caffeine only!", { duration: 3000 });
+            return;
         }
 
+//         // TEMP: override payment check for testing purposes
+//         const isPaid = true; // <== manually force access
+//
+// // Optionally, log if user is not marked as paid in localStorage
+//         const actuallyPaid = savedData ? JSON.parse(savedData)?.userDetails?.hasPaid : false;
+//         if (!actuallyPaid) {
+//             console.warn("User not marked as paid — allowing access for testing.");
+//         }
+//
 
         setLoading(true);
         try {

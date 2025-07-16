@@ -78,7 +78,7 @@ export default function AlmostThereForm({
     const isTalkItOut = selected === "Talk It Out";
 
     return (
-        <div className="h-[600px] bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col items-center justify-between px-6 py-4 relative">
+        <div className="h-[600px] bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col items-center justify-between px-6 pt-4 relative">
             {/* Glow Blobs */}
             <div className="absolute top-[-100px] left-[-100px] w-[250px] h-[250px] bg-gradient-to-br from-rose-300 via-amber-200 to-lime-100 rounded-full blur-3xl opacity-40 z-0" />
             <div className="absolute bottom-[-100px] right-[-100px] w-[220px] h-[220px] bg-gradient-to-tr from-amber-200 via-lime-200 to-rose-100 rounded-full blur-2xl opacity-30 z-0" />
@@ -153,7 +153,7 @@ export default function AlmostThereForm({
             </div>
 
             {/* Sticky Action Buttons */}
-            <div className="z-10 w-full max-w-md pt-4">
+            <div className="z-10 w-full max-w-md py-4">
                 <div className="flex justify-between items-center">
                     <button
                         onClick={onBack}
