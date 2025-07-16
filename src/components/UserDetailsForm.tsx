@@ -21,7 +21,6 @@ type UserDetails = {
 
 export default function UserDetailsForm({
                                             onSubmit,
-                                            onSkip,
                                             onBack,
     hasPaid
                                         }: {
@@ -40,7 +39,7 @@ export default function UserDetailsForm({
         energyLevel: 5,
     });
 
-    const handleChange = (field: keyof UserDetails, value: any) => {
+    const handleChange = (field: keyof UserDetails, value: string | number | boolean) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
 

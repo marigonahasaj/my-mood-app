@@ -98,7 +98,6 @@ function getQuestionsForMood(moodLabel: string): string[] {
 export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsightFormProps) {
     const questions = getQuestionsForMood(moodLabel);
     const [answers, setAnswers] = React.useState<string[]>(Array(questions.length).fill(""));
-    const [hasPaid, setHasPaid] = React.useState<boolean>(false);
 
     const handleChange = (index: number, value: string) => {
         const updated = [...answers];
@@ -123,7 +122,6 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
                 const data = await res.json();
                 console.log("✅ /verify-payment response:", data);
                 paid = data.status === "paid";
-                setHasPaid(paid);
             } catch (err) {
                 console.error("❌ Error verifying payment:", err);
             }
