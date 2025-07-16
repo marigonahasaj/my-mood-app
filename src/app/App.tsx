@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import OnboardingForm from "@/components/OnboardingForm";
 import MoodInsightForm from "@/components/MoodInsightForm";
-import UserDetailsForm from "@/components/UserDetailsForm";
+import {UserDetailsForm} from "@/components/UserDetailsForm";
 import AlmostThereForm from "@/components/AlmostThereForm";
 import MoodResult from "@/components/MoodResult";
 import MoodResultLoading from "@/components/MoodResultIsLoading";
