@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const options = [
     { label: "Cool Jams", emoji: "🎵" },
@@ -42,6 +43,7 @@ export default function AlmostThereForm({
     const [selectedSub, setSelectedSub] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState<string>("");
 
+
     const handleMainSelect = (label: string) => {
         setSelected(label);
         setSelectedSub(null);
@@ -49,17 +51,31 @@ export default function AlmostThereForm({
     };
 
     const handleContinue = () => {
-        if (selected && selectedSub) {
-            const result = [selected, selectedSub];
-            if (selected === "Talk It Out") {
-                result.push(inputValue.trim());
-            }
-            onNext(result);
+        if (!selected) {
+            toast.error("🧐 Choose your vibe first — we’re not mind readers (yet).");
+            return;
         }
+
+        if (!selectedSub) {
+            toast.error("🤔 Pick a flavor — sub-options give us context magic!");
+            return;
+        }
+
+        if (isTalkItOut && inputValue.trim().length === 0) {
+            toast.error("🗣️ Say something — even if it’s just 'ugh'.");
+            return;
+        }
+
+        const result = [selected, selectedSub];
+        if (isTalkItOut) {
+            result.push(inputValue.trim());
+        }
+
+        onNext(result);
     };
 
+
     const isTalkItOut = selected === "Talk It Out";
-    const isReady = selected && selectedSub && (!isTalkItOut || inputValue.trim().length > 0);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col items-center justify-between p-4 relative overflow-hidden">
@@ -149,8 +165,7 @@ export default function AlmostThereForm({
                     </button>
                     <button
                         onClick={handleContinue}
-                        disabled={!isReady}
-                        className="px-4 py-2 rounded-lg text-white font-semibold bg-gradient-to-r from-rose-400 via-amber-500 to-lime-500 hover:from-rose-500 hover:to-lime-500 disabled:bg-zinc-300 disabled:cursor-not-allowed"
+                        className="px-4 py-2 rounded-lg text-white font-semibold bg-gradient-to-r from-rose-400 via-amber-500 to-lime-500 hover:from-rose-500 hover:to-lime-500"
                     >
                         Continue →
                     </button>

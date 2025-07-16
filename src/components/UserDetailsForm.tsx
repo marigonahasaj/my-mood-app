@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 type UserDetails = {
     name?: string;
@@ -22,11 +23,14 @@ export default function UserDetailsForm({
                                             onSubmit,
                                             onSkip,
                                             onBack,
+    hasPaid
                                         }: {
     onSubmit: (data: UserDetails) => void;
     onSkip: () => void;
     onBack: () => void;
+    hasPaid?: boolean;
 }) {
+
     const [formData, setFormData] = useState<UserDetails>({
         name: "",
         email: "",
@@ -39,6 +43,7 @@ export default function UserDetailsForm({
     const handleChange = (field: keyof UserDetails, value: any) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
+
 
     const buttonGroup = (
         group: { label: string; value: string; emoji?: string }[],
@@ -65,12 +70,41 @@ export default function UserDetailsForm({
         </div>
     );
 
+    const handleSubmit = () => {
+        const requiredFields: (keyof UserDetails)[] = [
+            "name",
+            "email",
+            "ageRange",
+            "gender",
+            "sleepQuality",
+            "socialConnection",
+            "mentalClarity",
+            "moodStability",
+            "currentFeeling",
+            "emotionalNeed",
+        ];
+
+        const missing = requiredFields.filter((field) => !formData[field]);
+
+        if (!hasPaid && missing.length > 0) {
+            toast.error("🧠 Help us nudge you better — all fields are required.");
+            return;
+        }
+
+        onSubmit({
+            ...formData,
+            energyLevel: Number(formData.energyLevel),
+        });
+    };
+
+
+
     return (
-        <div className="min-h-screen bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col justify-between p-4 relative overflow-hidden">
-            <div className="absolute top-[-100px] left-[-100px] w-[250px] h-[250px] bg-gradient-to-br from-rose-300 via-amber-200 to-lime-100 rounded-full blur-3xl opacity-40 z-0" />
+        <div className="min-h-screen bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col relative overflow-hidden">
+        <div className="absolute top-[-100px] left-[-100px] w-[250px] h-[250px] bg-gradient-to-br from-rose-300 via-amber-200 to-lime-100 rounded-full blur-3xl opacity-40 z-0" />
             <div className="absolute bottom-[-100px] right-[-100px] w-[220px] h-[220px] bg-gradient-to-tr from-amber-200 via-lime-200 to-rose-100 rounded-full blur-2xl opacity-30 z-0" />
 
-            <div className="relative z-10 max-w-md w-full mx-auto space-y-6 flex flex-col justify-between flex-1">
+            <div className="relative z-10 max-w-md w-full mx-auto space-y-6 flex flex-col justify-between flex-1 px-4 py-6">
                 <div className="space-y-6">
                     <h2 className="text-xl font-bold text-center text-zinc-800">
                         Okay but like… who even are you 👀:
@@ -218,12 +252,7 @@ export default function UserDetailsForm({
                         ← Back
                     </button>
                     <button
-                        onClick={() =>
-                            onSubmit({
-                                ...formData,
-                                energyLevel: Number(formData.energyLevel),
-                            })
-                        }
+                        onClick={handleSubmit}
                         className="py-2 px-6 rounded-xl text-white font-medium bg-gradient-to-r from-rose-400 via-amber-500 to-lime-500 hover:from-rose-500 hover:to-lime-500 transition shadow-md"
                     >
                         Continue →

@@ -18,6 +18,7 @@ export default function MoodResult({
                                        goNext,
                                    }: MoodResultProps) {
     const [loading, setLoading] = useState(false);
+    const [showTerms, setShowTerms] = useState(false);
 
     const handleStripeCheckout = async () => {
         setLoading(true);
@@ -25,12 +26,16 @@ export default function MoodResult({
             const res = await fetch("http://localhost:8000/create-checkout-session", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: formData.userDetails.email }),
             });
+
 
             const data = await res.json();
             if (data.url) {
+                localStorage.setItem("formData", JSON.stringify(formData)); // Save to local device
                 window.location.href = data.url;
-            } else {
+            }
+            else {
                 console.error("Stripe session URL not received");
                 setLoading(false);
             }
@@ -83,6 +88,44 @@ export default function MoodResult({
                             >
                                 Treat me a <span className="text-2xl px-2">☕</span> I’ll remember you.
                             </button>
+                                <p className="text-xs text-zinc-300 mt-0.5">
+                                    By continuing, you agree to our{" "}
+                                    <button
+                                        onClick={() => setShowTerms(true)}
+                                        className="underline hover:text-zinc-600"
+                                    >
+                                        Terms
+                                    </button>
+                                </p>
+                            {showTerms && (
+                                <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center px-4">
+                                    <div className="bg-white max-w-lg w-full p-6 rounded-xl shadow-lg relative overflow-y-auto max-h-[80vh]">
+                                        <h2 className="text-lg font-semibold mb-2 text-zinc-800">Terms & Conditions</h2>
+                                        <p className="text-sm text-zinc-700 space-y-2 leading-relaxed">
+                                            <strong>Use of Service:</strong> This app provides mood-based insights, entertainment, and reflection tools based on your input. It is not a medical or therapeutic service.
+                                            <br /><br />
+                                            <strong>Payment:</strong> By supporting the app (e.g. buying a coffee), you gain access to time-saving features. This is a one-time, non-refundable contribution.
+                                            <br /><br />
+                                            <strong>No Refund Policy:</strong> All payments are final. No refunds will be issued once the transaction is completed.
+                                            <br /><br />
+                                            <strong>Data:</strong> We may use anonymized insights to improve our service. No personal data is shared or sold.
+                                            <br /><br />
+                                            <strong>Changes:</strong> We reserve the right to update these terms at any time without prior notice.
+                                            <br /><br />
+                                            By using this app, you agree to these terms.
+                                        </p>
+                                        <div className="mt-4 flex justify-end">
+                                            <button
+                                                onClick={() => setShowTerms(false)}
+                                                className="text-sm text-rose-500 hover:text-rose-700 underline"
+                                            >
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
 
                             <button
                                 onClick={handleGenerateAndContinue}

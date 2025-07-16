@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
     RocketLaunchIcon,
-    SparklesIcon,
     MusicalNoteIcon,
     TrophyIcon,
 } from "@heroicons/react/24/outline";
+import toast from "react-hot-toast";
 
 type MoodTone = "negative" | "neutral" | "positive";
 
@@ -61,8 +61,8 @@ const moodProfiles: MoodProfile[] = [
     },
     {
         emoji: "🧊",
-        label: "Stable & Clear-Headed",
-        description: "No chaos. No drama. Just emotionally hydrated and steady.",
+        label: "Clear-Headed",
+        description: "No chaos. No clutter. Just grounded thinking and steady vibes.",
         image: "/images/cool.jpg",
         tone: "positive",
         borderColor: "border-teal-400",
@@ -78,7 +78,7 @@ const moodProfiles: MoodProfile[] = [
     {
         emoji: "🔥",
         label: "Crushing Hard",
-        description: "You barely know them, but somehow they’re living rent-free in your head.",
+        description: "You barely know them, but they’ve taken over your mental playlist.",
         image: "/images/crush.webp",
         tone: "positive",
         borderColor: "border-blue-400",
@@ -87,16 +87,16 @@ const moodProfiles: MoodProfile[] = [
     // 🟡 NEUTRAL
     {
         emoji: "🔄",
-        label: "Ready for Change",
-        description: "Something needs to shift. A job? A habit? A vibe? You’re itching for new.",
+        label: "Craving Change",
+        description: "Something needs to shift. A job? A vibe? You’re ready to shake things up.",
         image: "/images/change.webp",
         tone: "neutral",
         borderColor: "border-indigo-400",
     },
     {
         emoji: "🧳",
-        label: "Craving Escape",
-        description: "You're fantasizing about disappearing for a while. Just... anywhere else.",
+        label: "Mentally Escaping",
+        description: "You’re dreaming of elsewhere. A different place, pace, or person.",
         image: "/images/escape.webp",
         tone: "neutral",
         borderColor: "border-violet-500",
@@ -104,23 +104,23 @@ const moodProfiles: MoodProfile[] = [
     {
         emoji: "🔁",
         label: "Distracted",
-        description: "Can't stay focused. Refreshing tabs, rereading lines, mind skipping.",
+        description: "Can’t focus. Refreshing tabs, rereading lines, nothing’s sticking.",
         image: "/images/forgetting.jpeg",
         tone: "neutral",
         borderColor: "border-purple-400",
     },
     {
         emoji: "📦",
-        label: "Mentally Cluttered",
-        description: "Too many tasks, not enough clarity. Brain feels tab-overloaded.",
+        label: "Cluttered",
+        description: "Too many thoughts, not enough clarity. You need a mental declutter.",
         image: "/images/todolist.jpg",
         tone: "neutral",
         borderColor: "border-fuchsia-400",
     },
     {
         emoji: "🥐",
-        label: "Unmotivated Comfort-Seeker",
-        description: "Drifting into snacks, scrolling, and soft distractions.",
+        label: "Seeking Comfort",
+        description: "Soft clothes. Easy snacks. Low-stakes vibes. That’s the mood.",
         image: "/images/snacking.webp",
         tone: "neutral",
         borderColor: "border-pink-400",
@@ -128,7 +128,7 @@ const moodProfiles: MoodProfile[] = [
     {
         emoji: "🕵️‍♀️",
         label: "Suspicious",
-        description: "Gut says something’s off. You’re watching, not reacting (yet).",
+        description: "You’re picking up on weird energy. Trusting your gut — not your group chat.",
         image: "/images/suspicious.webp",
         tone: "neutral",
         borderColor: "border-rose-400",
@@ -136,78 +136,103 @@ const moodProfiles: MoodProfile[] = [
 
     // 🔴 NEGATIVE
     {
-        emoji: "🎡",
-        label: "Overwhelmed",
-        description: "Thoughts racing, mind spinning, everything feels urgent.",
-        image: "/images/overwhelmed.webp",
+        emoji: "🌫️",
+        label: "Lost",
+        description: "The map’s gone. The motivation’s missing. You’re wandering internally.",
+        image: "/images/lost.webp",
         tone: "negative",
-        borderColor: "border-red-400",
+        borderColor: "border-gray-500",
     },
     {
-        emoji: "🛏️",
-        label: "Exhausted",
-        description: "Mentally alert, physically drained. Even sitting up feels like effort.",
-        image: "/images/tired.avif",
+        emoji: "🫥",
+        label: "Emotionally Numb",
+        description: "You’re present, but disconnected. Everything feels muted.",
+        image: "/images/numb.webp",
         tone: "negative",
-        borderColor: "border-red-500",
+        borderColor: "border-neutral-500",
     },
     {
-        emoji: "🫠",
-        label: "Anxious & Shutting Down",
-        description: "Emotionally tense, socially checked out, holding it together on the surface.",
-        image: "/images/spiraling.webp",
+        emoji: "🥶",
+        label: "Lonely",
+        description: "You’re surrounded, but it doesn’t feel like anyone sees you.",
+        image: "/images/lonely.webp",
         tone: "negative",
-        borderColor: "border-rose-500",
+        borderColor: "border-cyan-600",
     },
     {
-        emoji: "📉",
-        label: "Just Failed",
-        description: "That didn’t go as planned. A little embarrassed. A lot deflated.",
-        image: "/images/failure.webp",
+        emoji: "🧩",
+        label: "Identity Crisis",
+        description: "You’re questioning everything — especially yourself.",
+        image: "/images/identity.webp",
         tone: "negative",
-        borderColor: "border-zinc-500",
-    },
-    {
-        emoji: "💔",
-        label: "Heartbroken",
-        description: "It hurts. It really hurts. And you're just trying to stay afloat.",
-        image: "/images/heartbroken.webp",
-        tone: "negative",
-        borderColor: "border-zinc-500",
+        borderColor: "border-indigo-500",
     },
     {
         emoji: "🧨",
-        label: "Cheated or Betrayed",
-        description: "That trust? Gone. You're stunned, angry, or both.",
-        image: "/images/cheated.webp",
+        label: "Panicking",
+        description: "Tight chest. Racing thoughts. It’s fight, flight, or freeze time.",
+        image: "/images/panic.webp",
         tone: "negative",
-        borderColor: "border-zinc-600",
+        borderColor: "border-rose-700",
     },
     {
-        emoji: "🔒",
-        label: "Guarded",
-        description: "Walls up. Trust is earned, and today isn’t the day.",
-        image: "/images/guarded.webp",
+        emoji: "💤",
+        label: "Burned Out",
+        description: "Not just tired — empty. You’re scraping the bottom of your energy barrel.",
+        image: "/images/burnout.webp",
         tone: "negative",
-        borderColor: "border-zinc-600",
+        borderColor: "border-orange-600",
+    },
+    {
+        emoji: "🪞",
+        label: "Insecure",
+        description: "You’re overthinking every move and doubting your worth.",
+        image: "/images/insecure.webp",
+        tone: "negative",
+        borderColor: "border-blue-400",
+    },
+    {
+        emoji: "🫣",
+        label: "Guilty",
+        description: "Something’s weighing on you. You wish it had gone differently.",
+        image: "/images/guilty.webp",
+        tone: "negative",
+        borderColor: "border-yellow-700",
+    },
+    {
+        emoji: "🧿",
+        label: "Jealous",
+        description: "You’re watching someone else shine — and it stings more than you want to admit.",
+        image: "/images/jealous.webp",
+        tone: "negative",
+        borderColor: "border-emerald-700",
+    },
+    {
+        emoji: "💔",
+        label: "Affection Starved",
+        description: "It’s not just about hugs. You’re craving someone who *gets it*.",
+        image: "/images/affection.webp",
+        tone: "negative",
+        borderColor: "border-pink-700",
     },
     {
         emoji: "🎭",
-        label: "Feeling Manipulated",
-        description: "Something feels off. You’re being steered, not heard.",
-        image: "/images/manipulated.webp",
+        label: "Masking Emotions",
+        description: "You’re smiling for the world while hiding a storm inside.",
+        image: "/images/masking.webp",
         tone: "negative",
-        borderColor: "border-zinc-600",
+        borderColor: "border-purple-500",
     },
     {
-        emoji: "🌪️",
-        label: "Emotionally Flooded",
-        description: "Too many feelings, too fast. You're trying to keep it together.",
-        image: "/images/flooded.webp",
+        emoji: "📸",
+        label: "Sentimental",
+        description: "Everything feels like a memory today. Bittersweet and vivid.",
+        image: "/images/sentimental.webp",
         tone: "negative",
-        borderColor: "border-neutral-600",
-    },
+        borderColor: "border-fuchsia-500",
+    }
 ];
+
 
 export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodProfile, mode: "fit" | "shift") => void }) {
     const [step, setStep] = useState(0);
@@ -219,6 +244,46 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
         ...moodProfiles.filter((m) => m.tone === "neutral"),
         ...moodProfiles.filter((m) => m.tone === "positive"),
     ];
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [email, setEmail] = useState("");
+    const [isChecking, setIsChecking] = useState(false);
+
+
+    const handleSkip = async () => {
+        setIsChecking(true);
+        try {
+            const res = await fetch(`http://localhost:8000/has-paid?email=${encodeURIComponent(email)}`);
+            const data = await res.json();
+
+            if (data.paid) {
+                onSelect(
+                    {
+                        emoji: "",
+                        label: "",
+                        description: "",
+                        image: "",
+                        tone: "neutral",
+                        borderColor: "",
+                    },
+                    "fit"
+                );
+            }
+            else {
+                toast("I don't remember you treating me a ☕️ yet...", {
+                    icon: "😏",
+                });
+            }
+        } catch (err) {
+            console.error("Payment check failed:", err);
+            toast.error("Something went wrong. Try again later.");
+        } finally {
+            setIsModalOpen(false);
+            setIsChecking(false);
+        }
+    };
+
+
 
     useEffect(() => {
         if (step === 1) {
@@ -338,13 +403,44 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
                         <div className="text-sm text-zinc-600">
                             <button
                                 className="inline-flex items-center justify-center text-amber-500 hover:text-amber-700 font-medium underline"
-                                onClick={() => alert("Redirect to login/signup modal or page here")}
+                                onClick={() => setIsModalOpen(true)}
                             >
                                 Skip the small talk →
                             </button>
                         </div>
                     </div>
                 </div>
+                {isModalOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-6">
+                        <div className="bg-white rounded-xl shadow-lg max-w-sm w-full p-6 space-y-4">
+                            <h2 className="text-lg font-semibold text-zinc-800">Skip the small talk</h2>
+                            <p className="text-sm text-zinc-600">Enter your email to continue where you left off.</p>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="you@example.com"
+                                className="w-full border border-zinc-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                            />
+                            <div className="flex justify-end gap-2">
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="px-4 py-2 text-sm text-zinc-600 hover:text-zinc-800"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleSkip}
+                                    disabled={!email || isChecking}
+                                    className="px-4 py-2 text-sm text-white bg-amber-500 hover:bg-amber-600 rounded-md disabled:opacity-50"
+                                >
+                                    {isChecking ? "Checking..." : "Continue"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
             </div>
 
         );
@@ -411,7 +507,7 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
                         <div className="flex flex-row gap-4 w-full">
                             <button
                                 onClick={() => onSelect(selected, "fit")}
-                                className="flex-1 rounded-xl border-amber-300 bg-amber-400 hover:bg-amber-700 transition text-white p-2 shadow-sm"
+                                className="flex-1 rounded-xl border-amber-300 bg-amber-400 hover:bg-amber-500 transition text-white p-2 shadow-sm"
                             >
                                 <div className="flex flex-col items-center text-center">
                                     <div className="flex items-center font-semibold">

@@ -1,24 +1,75 @@
 "use client";
 import React, { useState } from "react";
+import { FormData } from "@/types/formdata";
+import toast from "react-hot-toast";
 
 interface ResultPageProps {
     response: string;
     moodIntent: string;
+    formData: FormData;
+    setOpenAiResponse: (val: string) => void;
     onReset: () => void;
 }
 
 export default function ResultPage({
                                        response,
                                        moodIntent,
+                                       formData,
+                                       setOpenAiResponse,
                                        onReset,
                                    }: ResultPageProps) {
     const [userMessage, setUserMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSend = () => {
         console.log("User replied:", userMessage);
-        // optionally send to server
         onReset();
     };
+
+
+    const handleAnotherAnswer = async () => {
+        console.log("🔄 Fetching another answer for mood:", moodIntent);
+        const savedData = localStorage.getItem("formData");
+        // const isPaid = savedData ? JSON.parse(savedData)?.userDetails?.hasPaid : false;
+        //
+        // if (!isPaid) {
+        //     toast.loading("☕ Coders become generous after coffee!");
+        //     return;
+        // }
+
+        // TEMP: override payment check for testing purposes
+        const isPaid = true; // <== manually force access
+
+// Optionally, log if user is not marked as paid in localStorage
+        const actuallyPaid = savedData ? JSON.parse(savedData)?.userDetails?.hasPaid : false;
+        if (!actuallyPaid) {
+            console.warn("User not marked as paid — allowing access for testing.");
+        }
+
+
+        setLoading(true);
+        try {
+            const response = await fetch("http://localhost:8000/generate-response", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (data.status === "success") {
+                setOpenAiResponse(data.response);
+            } else {
+                toast.error("Something went wrong generating a new response.");
+            }
+        } catch (err) {
+            console.error("Error fetching another answer:", err);
+            toast.error("Server error. Try again later.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     const renderResponse = () => {
         if (moodIntent === "Talk It Out") {
@@ -61,21 +112,44 @@ export default function ResultPage({
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-lime-50 via-amber-50 to-rose-50 px-4 py-12">
-            <div className="w-full max-w-md bg-white px-6 py-8 rounded-2xl shadow-xl space-y-6 text-center">
-                <h2 className="text-2xl font-bold text-zinc-800">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-lime-50 via-amber-50 to-rose-50 p-4">
+            <div className="w-full max-w-md bg-white p-4 rounded-2xl shadow-xl space-y-4 text-center">
+                <h2 className="text-lg font-bold text-zinc-800">
                     {moodIntent === "Talk It Out" ? "Let’s Chat 💬" : "Your Vibe-Based Insight"}
                 </h2>
 
-                {renderResponse()}
-
+                {loading ? (
+                    <p className="text-sm text-zinc-500 animate-pulse">🔄 Generating a fresh take…</p>
+                ) : (
+                    renderResponse()
+                )}
                 {moodIntent !== "Talk It Out" && (
-                    <button
-                        onClick={onReset}
-                        className="mt-4 text-sm text-red-500 hover:text-red-700 underline"
-                    >
-                        Start Over
-                    </button>
+                    <>
+                        <button
+                            onClick={handleAnotherAnswer}
+                            className="mt-4 text-sm w-full py-2 rounded-md bg-lime-100 text-lime-700 font-semibold hover:bg-lime-200 transition"
+                        >
+                            🪄 Another answer?
+                        </button>
+
+                        <div className="flex justify-between items-center mt-4">
+                            <button
+                                onClick={onReset}
+                                className="text-sm text-red-500 hover:text-red-700 underline"
+                            >
+                                Start Over
+                            </button>
+                            <button
+                                onClick={() => {
+                                    localStorage.removeItem("formData");
+                                    window.location.reload();
+                                }}
+                                className="text-sm text-zinc-500 hover:text-zinc-600 underline"
+                            >
+                                Clear my saved profile
+                            </button>
+                        </div>
+                    </>
                 )}
             </div>
         </div>
