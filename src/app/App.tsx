@@ -8,7 +8,7 @@ import MoodResult from "@/components/MoodResult";
 import MoodResultLoading from "@/components/MoodResultIsLoading";
 import ResultPage from "@/components/ResultPage";
 import SuccessStep from "@/components/SuccessStep";
-import { FormData } from "@/types/formdata";import { Toaster } from 'react-hot-toast';
+import { FormData } from "@/types/formdata";import toast, { Toaster } from 'react-hot-toast';
 
 
 
@@ -69,30 +69,51 @@ export default function App() {
                 const savedForm = localStorage.getItem("formData");
                 const parsed = savedForm ? JSON.parse(savedForm) : null;
 
-                // If same email exists in localstorage, re-use formData
-                if (parsed?.userDetails?.email === data.email) {
-                    setFormData(parsed);
-                    setStep(3); // Skip to final step
-                } else {
-                    // Otherwise, just mark user as paid
-                    setFormData((f) => ({
-                        ...f,
-                        userDetails: {
-                            ...f.userDetails,
-                            email: data.email,
-                            hasPaid: true,
-                        },
-                    }));
-                    setStep(1);
+                const updatedFormData = {
+                    ...(parsed ?? formData),
+                    userDetails: {
+                        ...(parsed?.userDetails ?? formData.userDetails),
+                        email: data.email,
+                        hasPaid: true,
+                    },
+                };
+
+                localStorage.setItem("formData", JSON.stringify(updatedFormData));
+                setFormData(updatedFormData);
+
+                // STEP 1: Transition into result loading view
+                setStep(98);
+
+                // STEP 2: Ask backend to generate response
+                try {
+                    const gen = await fetch("http://localhost:8000/generate-response", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(updatedFormData),
+                    });
+
+                    const genData = await gen.json();
+                    if (genData.status === "success") {
+                        setOpenAiResponse(genData.response);
+                        setTimeout(() => setStep(5), 2000); // Small delay for better UX
+                    } else {
+                        toast.error("Failed to generate your insight. Try again.");
+                        setStep(4); // fallback
+                    }
+                } catch (e) {
+                    console.error("Generation error:", e);
+                    toast.error("Server error while generating your result.");
+                    setStep(4); // fallback
                 }
 
-                // Remove query param
+                // Clear the session_id from the URL
                 window.history.replaceState({}, document.title, "/");
             }
         };
 
         verifyPayment();
     }, []);
+
 
 
 
@@ -245,6 +266,13 @@ export default function App() {
                         setOpenAiResponse={setOpenAiResponse}
                         onReset={resetFlow}
                     />
+                )}
+
+                {step === 98 && (
+                    <div className="text-center space-y-6 p-6 animate-pulse">
+                        <h2 className="text-2xl font-bold text-lime-700">🎉 Thanks for the tip!</h2>
+                        <p className="text-zinc-600">Fetching your personalized insight...</p>
+                    </div>
                 )}
 
                 {step === 99 && (
