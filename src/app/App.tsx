@@ -62,7 +62,7 @@ export default function App() {
         if (!sessionId) return;
 
         const verifyPayment = async () => {
-            const res = await fetch(`http://localhost:8000/verify-payment?session_id=${sessionId}`);
+            const res = await fetch(`/api/verify-payment?session_id=${sessionId}`);
             const data = await res.json();
 
             if (data.status === "paid") {
@@ -86,7 +86,7 @@ export default function App() {
 
                 // STEP 2: Ask backend to generate response
                 try {
-                    const gen = await fetch("http://localhost:8000/generate-response", {
+                    const gen = await fetch("/api/generate-response", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(updatedFormData),

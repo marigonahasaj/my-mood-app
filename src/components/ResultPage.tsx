@@ -38,7 +38,7 @@ export default function ResultPage({
 
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8000/generate-response", {
+            const response = await fetch("/api/generate-response", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

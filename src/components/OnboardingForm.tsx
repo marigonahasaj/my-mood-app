@@ -254,7 +254,7 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
     const handleSkip = async () => {
         setIsChecking(true);
         try {
-            const res = await fetch(`http://localhost:8000/has-paid?email=${encodeURIComponent(email)}`);
+            const res = await fetch(`/api/has-paid?email=${encodeURIComponent(email)}`);
             const data = await res.json();
 
             if (data.paid) {

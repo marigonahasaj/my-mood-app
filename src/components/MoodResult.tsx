@@ -23,7 +23,7 @@ export default function MoodResult({
     const handleStripeCheckout = async () => {
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:8000/create-checkout-session", {
+            const res = await fetch("/api/create-checkout-session", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: formData.userDetails.email }),
@@ -48,7 +48,7 @@ export default function MoodResult({
     const handleGenerateAndContinue = async () => {
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:8000/generate-response", {
+            const res = await fetch("/api/generate-response", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

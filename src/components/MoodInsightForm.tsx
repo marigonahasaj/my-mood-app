@@ -8,20 +8,36 @@ interface MoodInsightFormProps {
 }
 
 const moodSpecificQuestions: Record<string, string[]> = {
+    // 🔴 Negative
     "Lonely": [
         "When did you last feel truly connected to someone?",
         "Do you feel physically alone, emotionally distant, or both?",
         "Is this loneliness more about others — or something within you?",
     ],
-    "Bored": [
-        "What do you wish you were doing instead right now?",
-        "Is your boredom from lack of stimulation or lack of purpose?",
-        "Does this boredom show up often — or just today?",
-    ],
     "Emotionally Numb": [
         "Do you remember the last time you felt something deeply?",
         "Are you actively avoiding emotions, or are they just not arriving?",
         "What would need to happen for you to feel again?",
+    ],
+    "Identity Crisis": [
+        "What part of yourself feels unclear or unstable?",
+        "Are you shifting because of growth — or confusion?",
+        "What used to define you that no longer feels true?",
+    ],
+    "Panicking": [
+        "What’s making your body feel unsafe right now?",
+        "Can you name the worst-case scenario you’re fearing?",
+        "Is this moment urgent — or does it just feel that way?",
+    ],
+    "Burned Out": [
+        "What part of your life feels most drained?",
+        "Are you tired — or completely emptied out?",
+        "What would rest look like if you could take it seriously?",
+    ],
+    "Insecure": [
+        "What part of yourself feels most judged right now?",
+        "Are you comparing yourself to someone — or your own expectations?",
+        "What would help you feel more grounded in your worth?",
     ],
     "Guilty": [
         "What triggered this feeling of guilt?",
@@ -33,60 +49,99 @@ const moodSpecificQuestions: Record<string, string[]> = {
         "Is your jealousy about them — or about your own unmet needs?",
         "Would having what they have actually bring you peace?",
     ],
-    "Insecure": [
-        "What part of yourself feels most judged right now?",
-        "Are you comparing yourself to someone — or your own expectations?",
-        "What would help you feel more grounded in your worth?",
-    ],
-    "Lost": [
-        "What feels unclear or directionless?",
-        "Are you questioning your path, your identity, or both?",
-        "Is this a passing fog or a deeper kind of disorientation?",
-    ],
-    "Panicking": [
-        "What’s making your body feel unsafe right now?",
-        "Can you name the worst-case scenario you’re fearing?",
-        "Is this moment urgent — or does it just feel that way?",
-    ],
-    "Masking Happiness": [
-        "Who are you pretending for — and why?",
-        "What would it feel like to show what you're really feeling?",
-        "What part of your true emotion is hardest to admit?",
-    ],
     "Affection Starved": [
         "What kind of connection are you craving right now?",
         "Do you feel unseen, untouched, or unheard?",
         "When was the last time you felt emotionally nourished?",
+    ],
+    "Masking Emotions": [
+        "Who are you pretending for — and why?",
+        "What emotion are you suppressing beneath the surface?",
+        "What would it take to show your real self right now?",
     ],
     "Sentimental": [
         "What memory keeps resurfacing lately?",
         "Is this nostalgia joyful, painful, or both?",
         "What do you miss — the person, the place, or the version of you?",
     ],
-    "Vulnerable": [
-        "What part of you feels exposed right now?",
-        "Are you being open by choice — or because you had to be?",
-        "Do you feel safe in this vulnerability — or on edge?",
+    "Lost": [
+        "What feels unclear or directionless?",
+        "Are you questioning your path, your identity, or both?",
+        "Is this a passing fog or a deeper kind of disorientation?",
     ],
-    "Burned Out": [
-        "What part of your life feels most drained?",
-        "Are you tired — or completely emptied out?",
-        "What would rest look like if you could take it seriously?",
+
+    // 🟡 Neutral
+    "Craving Change": [
+        "What part of your life feels stuck or outdated?",
+        "What kind of change are you hoping for — big or small?",
+        "Are you ready to take action, or still figuring it out?",
     ],
-    "Impatient": [
-        "What are you waiting for that feels overdue?",
-        "Is your frustration with time, people, or your own pace?",
-        "Would slowing down feel like failure or freedom?",
+    "Mentally Escaping": [
+        "Where does your mind wander when you need relief?",
+        "Are you avoiding something in your current reality?",
+        "Is this escape a recharge — or a red flag?",
     ],
-    "Loved": [
-        "What made you feel truly seen or valued today?",
-        "Do you feel safe enough to receive that love fully?",
-        "Is it hard for you to believe this is real?",
+    "Distracted": [
+        "What keeps pulling your focus away today?",
+        "Is your distraction physical, emotional, or digital?",
+        "What would help you return to the present?",
     ],
-    "Identity Crisis": [
-        "What part of yourself feels unclear or unstable?",
-        "Are you shifting because of growth — or confusion?",
-        "What used to define you that no longer feels true?",
+    "Cluttered": [
+        "What’s taking up too much space in your mind right now?",
+        "Are you overwhelmed by things to do — or things to feel?",
+        "What would bring you one small moment of clarity?",
+    ],
+    "Seeking Comfort": [
+        "What’s been comforting to you lately?",
+        "Do you feel safe where you are — emotionally and physically?",
+        "What’s one soft or simple thing you’re craving today?",
+    ],
+    "Suspicious": [
+        "What’s made you feel uneasy or uncertain?",
+        "Is this suspicion coming from logic — or fear?",
+        "Would clarity help here — or distance?",
+    ],
+
+    // 🟢 Positive
+    "Empowered": [
+        "What’s making you feel powerful or capable today?",
+        "Are you expressing this confidence openly or keeping it grounded?",
+        "How can you channel this energy toward something meaningful?",
+    ],
+    "Hyper-Focused": [
+        "What are you locked in on right now?",
+        "Is this focus energizing — or exhausting?",
+        "What’s motivating your momentum today?",
+    ],
+    "Calm & Present": [
+        "What helped you reach this calm space?",
+        "Are you resisting chaos — or simply flowing through it?",
+        "What’s keeping you grounded right now?",
+    ],
+    "Quietly Hopeful": [
+        "What’s giving you that quiet sense of optimism?",
+        "Is this hope rooted in evidence — or intuition?",
+        "How can you protect this soft feeling?",
+    ],
+    "Energetically Motivated": [
+        "What’s fueling your movement or motivation today?",
+        "Does it feel effortless — or like you're pushing through?",
+        "How can you ride this wave without burning out?",
+    ],
+    "Clear-Headed": [
+        "What cleared the fog for you?",
+        "Is this clarity new — or always there, just ignored?",
+        "What can you decide or act on now, while your mind is this clear?",
+    ],
+    "Falling in Love": [
+        "What makes this person feel magnetic to you?",
+        "Are you letting yourself feel it — or trying to resist?",
+        "What part of you feels most alive in their presence?",
+    ],
+    "Crushing Hard": [
+        "What’s drawing you in — their vibe, their energy, or something deeper?",
+        "Are you fantasizing about them — or about how they make you feel?",
+        "Would it scare you to be honest about your feelings?",
     ],
 };
 
@@ -118,7 +173,7 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
         let paid = false;
         if (sessionId) {
             try {
-                const res = await fetch(`http://localhost:8000/verify-payment?session_id=${sessionId}`);
+                const res = await fetch(`/api/verify-payment?session_id=${sessionId}`);
                 const data = await res.json();
                 console.log("✅ /verify-payment response:", data);
                 paid = data.status === "paid";
