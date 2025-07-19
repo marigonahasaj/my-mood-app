@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
         {
           price_data: {
             currency: "usd",
-            unit_amount: 1,
+            unit_amount: 499, // $4.99
             product_data: {
               name: "Mood Profile Save + Coffee Tip",
               description: "Support the coder and skip setup next time ☕",
