@@ -67,8 +67,8 @@ export default function MoodResult({
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-lime-50 via-amber-50 to-rose-50 flex items-center justify-center px-4 py-12">
-            <div className="w-full max-w-md bg-white px-6 py-8 rounded-2xl shadow-xl space-y-6 text-center">
+        <div className="h-[667px] max-h-[667px] w-full bg-white flex flex-col relative overflow-hidden mx-auto p-4">
+            <div className="w-full max-w-md bg-white space-y-6 text-center">
 
                 {loading ? (
                     <div className="py-16">
@@ -77,18 +77,19 @@ export default function MoodResult({
                 ) : (
                     <>
                         <div className="space-y-2">
-                            <h2 className="text-3xl font-extrabold text-zinc-800">Almost there 💭</h2>
+                            <h2 className="text-3xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full">Almost there 💭</h2>
                             <p className="text-base text-zinc-600">Want to skip the boring steps next time?</p>
                         </div>
 
                         <div className="flex flex-col gap-4 pt-4">
                             <button
                                 onClick={handleStripeCheckout}
-                                className="w-full py-4 px-6 rounded-xl font-semibold text-zinc-600 border border-amber-400 hover:border-amber-600 hover:text-zinc-800 hover:shadow-md hover:bg-amber-50 transition-all"
+                                className="w-full py-4 px-6 rounded-2xl font-semibold text-white bg-gradient-to-r from-amber-400 via-rose-400 to-lime-400 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 ease-in-out flex items-center justify-center gap-2"
                             >
-                                Treat me a <span className="text-2xl px-2">☕</span> I’ll remember you.
+                                <span className="text-2xl">☕</span>
+                                <span className="text-base md:text-lg">Treat me a coffee — I’ll remember you!</span>
                             </button>
-                                <p className="text-xs text-zinc-300 mt-0.5">
+                            <p className="text-xs text-zinc-400 mt-0.5">
                                     By continuing, you agree to our{" "}
                                     <button
                                         onClick={() => setShowTerms(true)}
@@ -135,14 +136,12 @@ export default function MoodResult({
                             </button>
                         </div>
 
-                        <div className="pt-4">
                             <button
                                 onClick={onBack}
                                 className="text-sm text-zinc-500 hover:text-zinc-700 underline"
                             >
                                 ← Back
                             </button>
-                        </div>
                     </>
                 )}
             </div>

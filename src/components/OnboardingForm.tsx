@@ -301,8 +301,8 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
 
     if (step === 0) {
         return (
-            <div className="relative min-h-screen bg-white overflow-hidden flex flex-col justify-between">
-                <div className="relative z-10 flex-1 flex flex-col justify-between px-4 py-10 sm:py-16 lg:py-24">
+            <div className="relative h-[100vh] max-h-[100vh] bg-white overflow-hidden flex flex-col justify-between">
+                <div className="relative z-10 flex-1 flex flex-col justify-start md:justify-center px-4 py-10 sm:py-16 lg:py-24">
 
                     {/* Top content */}
                     <div className="max-w-xl w-full mx-auto text-center space-y-8">
@@ -449,19 +449,19 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-between py-4 relative overflow-hidden">
+        <div className="h-[100vh] max-h-[100vh] flex flex-col items-start md:items-center justify-start md:justify-center py-4 relative overflow-hidden">
             <div className="relative z-10 w-full max-w-md">
                 <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full px-4">
                     Current vibe:
                 </h2>
 
-                <div className="mt-2 relative rounded-2xl border border-zinc-200 shadow-inner overflow-hidden">
-                    {/* Top shadow indicator */}
+                <div className="mt-2 flex flex-col rounded-2xl border border-zinc-200 shadow-inner overflow-hidden max-h-[calc(100vh-12rem)]">
+                {/* Top shadow indicator */}
                     <div className="pointer-events-none absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-white to-transparent z-10" />
 
                     {/* Scrollable mood list */}
-                    <div className="max-h-[70vh] overflow-y-auto bg-white px-4 py-4 space-y-4">
-                        <fieldset className="space-y-4" aria-label="Mood Profile">
+                    <div className="flex-1 overflow-y-auto bg-white px-4 py-4 space-y-4">
+                    <fieldset className="space-y-4" aria-label="Mood Profile">
                             {sortedProfiles.map((profile) => {
                                 const isSelected = selected?.label === profile.label;
 

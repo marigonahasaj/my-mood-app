@@ -161,8 +161,8 @@ export default function ResultPage({
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-lime-50 via-amber-50 to-rose-50 p-4">
-            <div className="w-full max-w-md bg-white p-4 rounded-2xl shadow-xl space-y-4 text-center">
+        <div className="h-[667px] max-h-[667px] w-full bg-white flex flex-col relative overflow-hidden mx-auto p-4">
+            <div className="w-full max-w-md space-y-4 text-center">
                 {loading ? (
                     <p className="text-sm text-zinc-500 animate-pulse">🔄 Generating a fresh take…</p>
                 ) : (

@@ -78,24 +78,20 @@ export default function AlmostThereForm({
     const isTalkItOut = selected === "Talk It Out";
 
     return (
-        <div className="h-[600px] bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col items-center justify-between px-6 pt-4 relative">
-            {/* Glow Blobs */}
-            <div className="absolute top-[-100px] left-[-100px] w-[250px] h-[250px] bg-gradient-to-br from-rose-300 via-amber-200 to-lime-100 rounded-full blur-3xl opacity-40 z-0" />
-            <div className="absolute bottom-[-100px] right-[-100px] w-[220px] h-[220px] bg-gradient-to-tr from-amber-200 via-lime-200 to-rose-100 rounded-full blur-2xl opacity-30 z-0" />
-
+        <div className="h-[667px] max-h-[667px] w-full bg-white flex flex-col relative overflow-hidden mx-auto p-4">
             {/* Scrollable content area */}
-            <div className="z-10 w-full flex-1 max-w-md">
-                <h2 className="text-xl font-semibold -tracking-wider text-zinc-800 w-full">
+            <div className="z-10 w-full flex-1 max-w-md overflow-y-auto">
+                <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full">
                     What usually affects your mood?
                 </h2>
 
                 {/* Main Options */}
-                <div className="grid grid-cols-2 gap-2 text-left pt-2">
+                <div className="grid grid-cols-2 gap-2 text-left mt-4">
                     {options.map((item) => (
                         <button
                             key={item.label}
                             onClick={() => handleMainSelect(item.label)}
-                            className={`flex flex-col items-center justify-center p-3 rounded-xl transition border-2 text-center h-20 ${
+                            className={`flex flex-col items-center justify-center p-2 rounded-xl transition border-2 text-center h-20 ${
                                 selected === item.label
                                     ? "bg-amber-100 border-amber-400 text-amber-700"
                                     : "bg-white/80 border-zinc-200 hover:border-amber-300"
@@ -109,7 +105,7 @@ export default function AlmostThereForm({
 
                 {/* Sub-options */}
                 {selected && (
-                    <div className="text-center mt-4">
+                    <div className="text-center mt-4 border-t border-b py-4">
                         <h3 className="text-sm font-semibold text-zinc-700 mb-2">
                             Select what fits you best:
                         </h3>
@@ -135,7 +131,7 @@ export default function AlmostThereForm({
                 {isTalkItOut && selectedSub && (
                     <div className="mt-4 text-left">
                         <label className="block text-sm font-medium text-zinc-700 mb-1">
-                            Describe how you&apos;re feeling (max 300 characters):
+                            Can you describe how you&apos;re feeling in less than 100 words?:
                         </label>
                         <textarea
                             maxLength={300}
@@ -153,7 +149,7 @@ export default function AlmostThereForm({
             </div>
 
             {/* Sticky Action Buttons */}
-            <div className="z-10 w-full max-w-md py-4">
+            <div className="z-10 w-full max-w-md pt-4">
                 <div className="flex justify-between items-center">
                     <button
                         onClick={onBack}

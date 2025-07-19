@@ -98,18 +98,12 @@ export function UserDetailsForm({
 
 
     return (
-        <div
-            className="min-h-screen bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col relative overflow-hidden">
+        <div className="h-[667px] max-h-[667px] w-full bg-white flex flex-col relative overflow-hidden mx-auto">
             <div
-                className="absolute top-[-100px] left-[-100px] w-[250px] h-[250px] bg-gradient-to-br from-rose-300 via-amber-200 to-lime-100 rounded-full blur-3xl opacity-40 z-0"/>
-            <div
-                className="absolute bottom-[-100px] right-[-100px] w-[220px] h-[220px] bg-gradient-to-tr from-amber-200 via-lime-200 to-rose-100 rounded-full blur-2xl opacity-30 z-0"/>
-
-            <div
-                className="relative z-10 max-w-md w-full mx-auto space-y-6 flex flex-col justify-between flex-1 px-4 py-6">
+                className="relative z-10 max-w-md w-full mx-auto space-y-6 flex flex-col justify-between flex-1 p-4 overflow-y-auto">
                 <div className="space-y-6">
-                    <h2 className="text-xl font-bold text-center text-zinc-800">
-                        Okay but like… who even are you 👀:
+                    <h2 className="text-2xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full">
+                    Okay but like… <span className="text-zinc-500">👀</span><br/> who even are you?
                     </h2>
 
                     <div className="space-y-4">

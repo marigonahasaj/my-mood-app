@@ -68,7 +68,7 @@ const moodSpecificQuestions: Record<string, string[]> = {
         "Are you being open by choice — or because you had to be?",
         "Do you feel safe in this vulnerability — or on edge?",
     ],
-    "Burnout": [
+    "Burned Out": [
         "What part of your life feels most drained?",
         "Are you tired — or completely emptied out?",
         "What would rest look like if you could take it seriously?",
@@ -138,15 +138,12 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
 
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-rose-50 via-amber-50 to-lime-50 flex flex-col justify-between p-4 relative overflow-hidden">
-            {/* Glowy blobs */}
-            <div className="absolute top-[-100px] left-[-100px] w-[250px] h-[250px] bg-gradient-to-br from-rose-300 via-amber-200 to-lime-100 rounded-full blur-3xl opacity-40 z-0" />
-            <div className="absolute bottom-[-100px] right-[-100px] w-[220px] h-[220px] bg-gradient-to-tr from-amber-200 via-lime-200 to-rose-100 rounded-full blur-2xl opacity-30 z-0" />
-
+        <div className="h-[667px] max-h-[667px] w-full bg-white flex flex-col p-4 relative overflow-hidden mx-auto">
             {/* Form Container */}
-            <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col justify-between flex-1">
+            <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col justify-between flex-1 px-2">
                 <div className="space-y-2 my-4">
-                    <h2 className="text-xl font-bold text-zinc-800 text-center">Let’s understand this mood better</h2>
+                    <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full px-4">
+                        Let’s understand this mood better</h2>
 
                     <div className="space-y-2 overflow-y-auto">
                         {questions.map((q, i) => (
