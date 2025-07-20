@@ -152,7 +152,7 @@ function getQuestionsForMood(moodLabel: string): string[] {
 }
 
 
-export default function MoodInsightForm({ moodLabel, onNext, onBack ,onSkipPaid}: MoodInsightFormProps) {
+export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsightFormProps) {
     const questions = getQuestionsForMood(moodLabel);
     const [answers, setAnswers] = React.useState<string[]>(Array(questions.length).fill(""));
 
