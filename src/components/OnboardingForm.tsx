@@ -286,9 +286,8 @@ export default function OnboardingForm({
 
                             <div className="relative h-28 overflow-hidden flex justify-center shadow-inner bg-white bg-opacity-30 backdrop-blur-3xl">
                                 <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white to-transparent pointer-events-none z-10" />
-                                <div className="absolute top-0 animate-roll space-y-[10px] z-0">
-                                    {[...Array(3)].map((_, i) => (
-                                        /* eslint-disable @next/next/no-img-element */
+                                <div className="absolute top-0 transform animate-roll space-y-[10px] z-0">
+                                {[...Array(3)].map((_, i) => (
                                         <img key={i} src="/images/emotions.gif" alt={`Emotions ${i}`} className="w-full object-cover" />
                                     ))}
                                 </div>
