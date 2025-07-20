@@ -38,5 +38,6 @@ export interface FormData {
     moodInsights: MoodInsights;
     userDetails: UserDetails;
     moodIntent: string;
-    finalDetails: string[];
+    finalDetails: FinalDetails[];
 }
+

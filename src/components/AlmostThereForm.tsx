@@ -35,9 +35,11 @@ const subOptions: Record<string, string[]> = {
 export default function AlmostThereForm({
                                             onNext,
                                             onBack,
+                                            hasPaid,
                                         }: {
-    onNext: (data: string[]) => void;
+    onNext: (data: string[], skipMoodResult: boolean) => void;
     onBack: () => void;
+    hasPaid: boolean;
 }) {
     const [selected, setSelected] = useState<string | null>(null);
     const [selectedSub, setSelectedSub] = useState<string | null>(null);
@@ -71,8 +73,10 @@ export default function AlmostThereForm({
             result.push(inputValue.trim());
         }
 
-        onNext(result);
+        // this will skip MoodResult if the user hasPaid
+        onNext(result, hasPaid);
     };
+
 
 
     const isTalkItOut = selected === "Talk It Out";

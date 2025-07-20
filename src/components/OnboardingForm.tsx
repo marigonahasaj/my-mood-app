@@ -4,7 +4,6 @@ import {
     MusicalNoteIcon,
     TrophyIcon,
 } from "@heroicons/react/24/outline";
-import toast from "react-hot-toast";
 
 type MoodTone = "negative" | "neutral" | "positive";
 
@@ -234,7 +233,13 @@ const moodProfiles: MoodProfile[] = [
 ];
 
 
-export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodProfile, mode: "fit" | "shift") => void }) {
+export default function OnboardingForm({
+                                           onSelect,
+
+                                       }: {
+    onSelect: (profile: MoodProfile, mode: "fit" | "shift") => void;
+    onSkipPaid: (email: string) => void;
+}) {
     const [step, setStep] = useState(0);
     const [selected, setSelected] = useState<MoodProfile | null>(null);
     const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -245,45 +250,6 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
         const positives = moodProfiles.filter((m) => m.tone === "positive");
         return [...negatives, ...neutrals, ...positives];
     }, []);
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [email, setEmail] = useState("");
-    const [isChecking, setIsChecking] = useState(false);
-
-
-    const handleSkip = async () => {
-        setIsChecking(true);
-        try {
-            const res = await fetch(`/api/has-paid?email=${encodeURIComponent(email)}`);
-            const data = await res.json();
-
-            if (data.paid) {
-                onSelect(
-                    {
-                        emoji: "",
-                        label: "",
-                        description: "",
-                        image: "",
-                        tone: "neutral",
-                        borderColor: "",
-                    },
-                    "fit"
-                );
-            }
-            else {
-                toast("I don't remember you treating me a ☕️ yet...", {
-                    icon: "😏",
-                });
-            }
-        } catch (err) {
-            console.error("Payment check failed:", err);
-            toast.error("Something went wrong. Try again later.");
-        } finally {
-            setIsModalOpen(false);
-            setIsChecking(false);
-        }
-    };
-
 
 
     useEffect(() => {
@@ -402,46 +368,10 @@ export default function OnboardingForm({ onSelect }: { onSelect: (profile: MoodP
                             Tune it UP <RocketLaunchIcon className="text-white w-6 h-6" />
                         </button>
 
-                        <div className="text-sm text-zinc-600">
-                            <button
-                                className="inline-flex items-center justify-center text-amber-500 hover:text-amber-700 font-medium underline"
-                                onClick={() => setIsModalOpen(true)}
-                            >
-                                Skip the small talk →
-                            </button>
-                        </div>
+
                     </div>
                 </div>
-                {isModalOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-6">
-                        <div className="bg-white rounded-xl shadow-lg max-w-sm w-full p-6 space-y-4">
-                            <h2 className="text-lg font-semibold text-zinc-800">Skip the small talk</h2>
-                            <p className="text-sm text-zinc-600">Enter your email to continue where you left off.</p>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="you@example.com"
-                                className="w-full border border-zinc-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
-                            />
-                            <div className="flex justify-end gap-2">
-                                <button
-                                    onClick={() => setIsModalOpen(false)}
-                                    className="px-4 py-2 text-sm text-zinc-600 hover:text-zinc-800"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    onClick={handleSkip}
-                                    disabled={!email || isChecking}
-                                    className="px-4 py-2 text-sm text-white bg-amber-500 hover:bg-amber-600 rounded-md disabled:opacity-50"
-                                >
-                                    {isChecking ? "Checking..." : "Continue"}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+
 
             </div>
 

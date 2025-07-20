@@ -146,6 +146,14 @@ export default function App() {
         setStep(0);
     };
 
+    useEffect(() => {
+        if (step === 4 && formData.userDetails.hasPaid && openAiResponse) {
+            setStep(5);
+        }
+    }, [step, formData.userDetails.hasPaid, openAiResponse]);
+
+
+
     return (
         <main className="min-h-screen flex justify-center items-start md:items-center bg-white">
             <Toaster position="top-center" />
@@ -159,7 +167,21 @@ export default function App() {
                             }));
                             setStep(1);
                         }}
+                        onSkipPaid={(email) => {
+                            setFormData((f) => ({
+                                ...f,
+                                userDetails: {
+                                    ...f.userDetails,
+                                    email,
+                                    hasPaid: true,
+                                    skipped: true,
+                                },
+                            }));
+                            setStep(3);
+                        }}
+
                     />
+
 
                 )}
 
@@ -181,17 +203,25 @@ export default function App() {
                                 },
                             }));
 
-                            if (userHasPaid) {
-                                setStep(3);
-                            } else {
-                                setStep(2);
-                            }
+                            setStep(2);
+
                         }}
                         onBack={goBack}
+                        onSkipPaid={(email) => {
+                            setFormData((f) => ({
+                                ...f,
+                                userDetails: {
+                                    ...f.userDetails,
+                                    email,
+                                    hasPaid: true,
+                                    skipped: true,
+                                },
+                            }));
+                            setStep(3);
+                        }}
                     />
-
-
                 )}
+
 
                 {step === 2 && (
                     <UserDetailsForm
@@ -223,26 +253,34 @@ export default function App() {
                 )}
 
                 {step === 3 && (
-                    formData.userDetails.hasPaid ? (
-                        (() => {
-                            setStep(4);
-                            return null;
-                        })()
-                    ) : (
-                        <AlmostThereForm
-                            onNext={(finalDetails) => {
-                                setFormData((f) => ({ ...f, finalDetails }));
-                                goNext();
-                            }}
-                            onBack={goBack}
-                        />
-                    )
+                    <AlmostThereForm
+                        hasPaid={formData.userDetails.hasPaid || false}
+                        onNext={(selectedOptions, skipMoodResult) => {
+                            const [main, sub, input] = selectedOptions;
+                            const newFinalDetail = {
+                                moodImprover: main,
+                                moodImproverDetail: sub + (input ? ` | ${input}` : ""),
+                            };
+
+                            setFormData((prev) => ({
+                                ...prev,
+                                finalDetails: [newFinalDetail],
+                            }));
+
+                            setStep(skipMoodResult ? 98 : 4);
+                        }}
+                        onBack={() => setStep(1)}
+                    />
+
                 )}
+
 
 
                 {step === 4 && (
                     <>
-                        {isLoading ? (
+                        {formData.userDetails.hasPaid && openAiResponse ? (
+                            setStep(5)
+                        ) : isLoading ? (
                             <MoodResultLoading />
                         ) : (
                             <MoodResult
@@ -257,6 +295,7 @@ export default function App() {
                     </>
                 )}
 
+
                 {step === 5 && openAiResponse && (
                     <ResultPage
                         key={openAiResponse}
@@ -269,9 +308,9 @@ export default function App() {
                 )}
 
                 {step === 98 && (
-                    <div className="text-center space-y-6 p-6 animate-pulse">
-                        <h2 className="text-2xl font-bold text-lime-700">🎉 Thanks for the tip!</h2>
-                        <p className="text-zinc-600">Fetching your personalized insight...</p>
+                    <div className="text-center space-y-6 px-6 py-20 animate-pulse">
+                        <h2 className="text-2xl font-bold text-lime-700">✨ Brewing your result...</h2>
+                        <p className="text-zinc-600">Mood alchemy in progress. Almost there.</p>
                     </div>
                 )}
 

@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import toast from "react-hot-toast";
 
 interface MoodInsightFormProps {
     moodLabel: string;
     onNext: (data: { moodLabel: string; answers: string[]; hasPaid?: boolean }) => void;
     onBack: () => void;
+    onSkipPaid: (email: string) => void;
 }
+
 
 const moodSpecificQuestions: Record<string, string[]> = {
     // 🔴 Negative
@@ -150,9 +152,14 @@ function getQuestionsForMood(moodLabel: string): string[] {
 }
 
 
-export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsightFormProps) {
+export default function MoodInsightForm({ moodLabel, onNext, onBack ,onSkipPaid}: MoodInsightFormProps) {
     const questions = getQuestionsForMood(moodLabel);
     const [answers, setAnswers] = React.useState<string[]>(Array(questions.length).fill(""));
+
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [email, setEmail] = useState("");
+    const [isChecking, setIsChecking] = useState(false);
 
     const handleChange = (index: number, value: string) => {
         const updated = [...answers];
@@ -192,6 +199,49 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
     };
 
 
+    const handleSkip = async () => {
+        const trimmedEmail = email.trim();
+
+        // Abort if inputs are still empty
+        const isFormEmpty = answers.every((ans) => ans.trim() === "");
+        if (isFormEmpty) {
+            toast.error("Please answer the questions so that I can give a better insight.");
+            return;
+        }
+
+        // Abort if empty or invalid email
+        if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+            toast.error("Please enter a valid email.");
+            return;
+        }
+
+        setIsChecking(true);
+        try {
+            const res = await fetch(`/api/has-paid?email=${encodeURIComponent(trimmedEmail)}`);
+            const data = await res.json();
+
+            if (data.paid) {
+                const dummyAnswers = questions.map(() => "[skipped]");
+                onNext({
+                    moodLabel,
+                    answers: dummyAnswers,
+                    hasPaid: true,
+                });
+                toast.success("Welcome back! Brewing your new results...");
+            } else {
+                toast("I don’t remember you treating me a ☕️ yet...", { icon: "😏" });
+            }
+        } catch (err) {
+            console.error("Payment check failed:", err);
+            toast.error("Something went wrong. Try again later.");
+        } finally {
+            setIsModalOpen(false);
+            setIsChecking(false);
+        }
+    };
+
+
+
     return (
         <div className="h-[667px] max-h-[667px] w-full bg-white flex flex-col p-4 relative overflow-hidden mx-auto">
             {/* Form Container */}
@@ -215,7 +265,14 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
                         ))}
                     </div>
                 </div>
-
+                <div className="text-sm text-zinc-600 flex justify-center items-center">
+                    <button
+                        className="inline-flex items-center justify-center text-amber-500 hover:text-amber-700 font-medium underline"
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        Skip the small talk →
+                    </button>
+                </div>
                 <div className="flex justify-between items-center pt-4 border-t border-zinc-200">
                     <button
                         onClick={onBack}
@@ -231,6 +288,36 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
                         Next →
                     </button>
                 </div>
+                {isModalOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-6">
+                        <div className="bg-white rounded-xl shadow-lg max-w-sm w-full p-6 space-y-4">
+                            <h2 className="text-lg font-semibold text-zinc-800">Skip the small talk</h2>
+                            <p className="text-sm text-zinc-600">Enter your email to continue where you left off.</p>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="you@example.com"
+                                className="w-full border border-zinc-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                            />
+                            <div className="flex justify-end gap-2">
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="px-4 py-2 text-sm text-zinc-600 hover:text-zinc-800"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleSkip}
+                                    disabled={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || isChecking}
+                                    className="px-4 py-2 text-sm text-white bg-amber-500 hover:bg-amber-600 rounded-md disabled:opacity-50"
+                                >
+                                    {isChecking ? "Checking..." : "Continue"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
