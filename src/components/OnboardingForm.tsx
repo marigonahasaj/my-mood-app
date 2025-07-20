@@ -4,6 +4,7 @@ import {
     MusicalNoteIcon,
     TrophyIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 type MoodTone = "negative" | "neutral" | "positive";
 
@@ -283,16 +284,26 @@ export default function OnboardingForm({
                                     <li>Let our AI do the overthinking for once.</li>
                                 </ul>
                             </div>
-
                             <div className="relative h-28 overflow-hidden flex justify-center shadow-inner bg-white bg-opacity-30 backdrop-blur-3xl">
                                 <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white to-transparent pointer-events-none z-10" />
+
                                 <div className="absolute top-0 transform animate-roll space-y-[10px] z-0">
-                                {[...Array(3)].map((_, i) => (
-                                        <img key={i} src="/images/emotions.gif" alt={`Emotions ${i}`} className="w-full object-cover" />
+                                    {[...Array(3)].map((_, i) => (
+                                        <Image
+                                            key={i}
+                                            src="/images/emotions.gif"
+                                            alt={`Emotions ${i}`}
+                                            width={100}
+                                            height={100}
+                                            className="w-full object-cover"
+                                            priority
+                                        />
                                     ))}
                                 </div>
+
                                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
                             </div>
+
 
                             <div className="pt-2">
                                 <ul className="grid grid-cols-3 gap-y-4 text-sm text-center w-full max-w-sm mx-auto">
