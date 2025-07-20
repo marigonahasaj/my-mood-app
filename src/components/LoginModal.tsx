@@ -16,7 +16,7 @@ function LoginModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: ()
                 <input
                     type="email"
                     placeholder="Your email"
-                    className="w-full border px-4 py-2 rounded-lg"
+                    className="w-full border px-4 py-2 rounded-lg text-zinc-700"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />

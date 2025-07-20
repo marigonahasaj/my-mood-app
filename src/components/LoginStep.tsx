@@ -13,7 +13,7 @@ export default function LoginStep({ onLogin }: { onLogin: (email: string) => voi
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-zinc-300 rounded-xl px-4 py-2 text-sm focus:ring-amber-200"
+                className="w-full border border-zinc-300 rounded-xl px-4 py-2 text-sm text-zinc-600 focus:ring-amber-200"
             />
             <button
                 onClick={() => onLogin(email)}

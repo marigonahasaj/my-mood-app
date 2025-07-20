@@ -161,7 +161,7 @@ export default function ResultPage({
     };
 
     return (
-        <div className="h-[667px] max-h-[667px] w-full bg-white flex flex-col relative overflow-hidden mx-auto p-4">
+        <div className="h-[650px] max-h-[650px] w-full bg-white flex flex-col relative overflow-hidden mx-auto p-4">
             <div className="w-full max-w-md space-y-4 text-center">
                 {loading ? (
                     <p className="text-sm text-zinc-500 animate-pulse">🔄 Generating a fresh take…</p>

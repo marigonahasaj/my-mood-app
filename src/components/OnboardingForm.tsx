@@ -391,7 +391,7 @@ export default function OnboardingForm({
     return (
         <div className="h-[100vh] max-h-[100vh] flex flex-col items-start md:items-center justify-start md:justify-center py-4 relative overflow-hidden">
             <div className="relative z-10 w-full max-w-md">
-                <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full px-4">
+                <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full">
                     Current vibe:
                 </h2>
 
@@ -420,7 +420,7 @@ export default function OnboardingForm({
                                             value={profile.label}
                                             checked={isSelected}
                                             onChange={() => setSelected(profile)}
-                                            className="absolute inset-0 appearance-none cursor-pointer focus:outline-none"
+                                            className="absolute inset-0 appearance-none cursor-pointer focus:outline-none text-zinc-600"
                                         />
                                         <div className="flex items-start gap-4 text-left">
                                             <div className="text-xl">{profile.emoji}</div>

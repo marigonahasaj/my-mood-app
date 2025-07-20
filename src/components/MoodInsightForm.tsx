@@ -243,12 +243,12 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
 
 
     return (
-        <div className="h-[667px] max-h-[667px] w-full bg-white flex flex-col p-4 relative overflow-hidden mx-auto">
+        <div className="h-[650px] max-h-[650px] w-full bg-white flex flex-col relative overflow-hidden mx-auto">
             {/* Form Container */}
             <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col justify-between flex-1 px-2">
-                <div className="space-y-2 my-4">
-                    <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full px-4">
-                        Let’s understand this mood better</h2>
+                <div className="space-y-2">
+                    <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full">
+                        Let’s understand this mood better:</h2>
 
                     <div className="space-y-2 overflow-y-auto">
                         {questions.map((q, i) => (
@@ -298,7 +298,7 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="you@example.com"
-                                className="w-full border border-zinc-300 rounded-md px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-amber-400"
+                                className="w-full border border-zinc-300 rounded-md px-3 py-2 text-base text-zinc-600 focus:outline-none focus:ring-2 focus:ring-amber-400"
                             />
                             <div className="flex justify-end gap-2">
                                 <button

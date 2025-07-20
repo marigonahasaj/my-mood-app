@@ -82,7 +82,7 @@ export default function AlmostThereForm({
     const isTalkItOut = selected === "Talk It Out";
 
     return (
-        <div className="h-[667px] max-h-[667px] w-full bg-white flex flex-col relative overflow-hidden mx-auto p-4">
+        <div className="h-[650px] max-h-[650px] w-full bg-white flex flex-col relative overflow-hidden mx-auto p-4">
             {/* Scrollable content area */}
             <div className="z-10 w-full flex-1 max-w-md overflow-y-auto">
                 <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full">
