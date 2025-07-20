@@ -19,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en" className={`${montserrat.variable}`}>
         <head>
             {/* Google Analytics */}
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
             <Script
                 strategy="afterInteractive"
                 src={`https://www.googletagmanager.com/gtag/js?id=G-C09MT1W5VN`}
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
-                    gtag('config', 'G-ABCDE12345');
+                    gtag('config', 'G-C09MT1W5VN');
                 `}
             </Script>
         </head>

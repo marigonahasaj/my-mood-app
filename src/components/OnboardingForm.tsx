@@ -395,7 +395,7 @@ export default function OnboardingForm({
                     Current vibe:
                 </h2>
 
-                <div className="mt-2 flex flex-col rounded-2xl border border-zinc-200 shadow-inner overflow-hidden max-h-[calc(100vh-12rem)]">
+                <div className="mt-2 flex flex-col rounded-2xl border border-zinc-200 shadow-inner overflow-hidden min-h-[400px] max-h-[470px]">
                 {/* Top shadow indicator */}
                     <div className="pointer-events-none absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-white to-transparent z-10" />
 

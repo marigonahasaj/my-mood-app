@@ -289,7 +289,7 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
                     </button>
                 </div>
                 {isModalOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-6">
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
                         <div className="bg-white rounded-xl shadow-lg max-w-sm w-full p-6 space-y-4">
                             <h2 className="text-lg font-semibold text-zinc-800">Skip the small talk</h2>
                             <p className="text-sm text-zinc-600">Enter your email to continue where you left off.</p>
@@ -298,7 +298,7 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="you@example.com"
-                                className="w-full border border-zinc-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                                className="w-full border border-zinc-300 rounded-md px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-amber-400"
                             />
                             <div className="flex justify-end gap-2">
                                 <button
