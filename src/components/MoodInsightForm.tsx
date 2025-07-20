@@ -258,7 +258,7 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
                                     rows={3}
                                     value={answers[i]}
                                     onChange={(e) => handleChange(i, e.target.value)}
-                                    className="w-full border border-zinc-300 rounded-xl px-4 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-amber-200"
+                                    className="w-full border border-zinc-300 rounded-xl px-4 py-2 text-sm text-zinc-700 resize-none focus:outline-none focus:ring-2 focus:ring-amber-200"
                                     placeholder="Type your answer..."
                                 />
                             </div>
