@@ -100,7 +100,7 @@ export default function MoodResult({
                                 </p>
                             {showTerms && (
                                 <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center px-4">
-                                    <div className="bg-white max-w-lg w-full p-6 rounded-xl shadow-lg relative overflow-y-auto max-h-[80vh]">
+                                    <div className="bg-white max-w-lg w-full p-6 rounded-xl shadow-lg relative max-h-[80vh]">
                                         <h2 className="text-lg font-semibold mb-2 text-zinc-800">Terms & Conditions</h2>
                                         <p className="text-sm text-zinc-700 space-y-2 leading-relaxed">
                                             <strong>Use of Service:</strong> This app provides mood-based insights, entertainment, and reflection tools based on your input. It is not a medical or therapeutic service.

@@ -400,7 +400,7 @@ export default function OnboardingForm({
                     <div className="pointer-events-none absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-white to-transparent z-10" />
 
                     {/* Scrollable mood list */}
-                    <div className="flex-1 overflow-y-auto bg-white px-4 py-4 space-y-4">
+                    <div className="flex-1 bg-white px-4 py-4 space-y-4">
                     <fieldset className="space-y-4" aria-label="Mood Profile">
                             {sortedProfiles.map((profile) => {
                                 const isSelected = selected?.label === profile.label;

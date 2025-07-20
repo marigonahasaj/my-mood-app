@@ -250,7 +250,7 @@ export default function MoodInsightForm({ moodLabel, onNext, onBack }: MoodInsig
                     <h2 className="text-xl font-semibold -tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-olive-500 via-olive-300 to-amber-400 w-full">
                         Let’s understand this mood better:</h2>
 
-                    <div className="space-y-2 overflow-y-auto">
+                    <div className="space-y-2">
                         {questions.map((q, i) => (
                             <div key={i} className="space-y-1">
                                 <label className="text-sm text-zinc-700">{q}</label>
