@@ -61,7 +61,7 @@ export default function ResultPage({
 
     const renderResponse = () => {
         const rawIntent = formData?.finalDetails?.[0] || "";
-        const normalizedIntent = rawIntent.trim().toLowerCase();
+        const normalizedIntent = rawIntent.moodImproverDetail.trim().toLowerCase();
 
         const moodThemes: Record<string, { emoji: string; title: string; className: string }> = {
             "cool jams": {
